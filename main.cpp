@@ -26,7 +26,7 @@ float deltaAngle = 0.0f;
 float deltaMove = 0;
 int xOrigin = -1;
 
-int positionX, positionZ = 0;
+int positionX = 0, positionZ = -2;
 
 void changeSize(int w, int h) {
 
@@ -106,7 +106,7 @@ void renderScene(void) {
 
 	// Draw 36 SnowMen
 	glPushMatrix();
-	glTranslatef(positionX * 2.0, 0, positionZ * 2.0);
+	glTranslatef(positionX * 1, 0, positionZ * 1);
 	drawSnowMan();
 	glPopMatrix();
 	
@@ -118,14 +118,14 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 	switch (key) {
 		case 27: exit(0); break;
 		case 119: { // w
-			if (positionZ <= -50) {
+			if (positionZ <= -100) {
 				break;
 				return;
 			}
 			positionZ--; break;
 		}
 		case 115: { // s
-			if (positionZ >= 50) {
+			if (positionZ >= 100) {
 				break;
 				return;
 			}
@@ -133,7 +133,7 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 			break;
 		}  
 		case 97: { // a
-			if (positionX <= -50) {
+			if (positionX <= -100) {
 				break;
 				return;
 			}
@@ -142,7 +142,7 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 		} 
 				  
 		case 100: { // d
-			if (positionX >= 50) {
+			if (positionX >= 100) {
 				break;
 				return;
 			}
