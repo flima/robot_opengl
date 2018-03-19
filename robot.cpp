@@ -1,9 +1,3 @@
-/*
-cd Desktop
-gcc -o sist sistema.cpp -lglut -lGL -lGLU
-./sist
-*/
-
 #include <Windows.h>
 #include <GL\glew.h>
 #include <GL\freeglut.h>
@@ -28,7 +22,7 @@ rotation armRotate;
 float rightRun = 0.0f;
 float leftRun = 0.0f;
 float ypos = 0.0f;
-float angle = 50.0f;
+float angleRobot = 50.0f;
 float armPos = 2.0f;
 bool moved = false;
 bool jumped = false;
@@ -54,7 +48,7 @@ GLfloat high_shininess[] = { 10.0f };
 
 void init() {
 
-	glEnable(GL_DEPTH_TEST);
+	/*glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
@@ -67,86 +61,85 @@ void init() {
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);*/
 
 }
 
-static void createRobot() {
+void createRobot() {
 
 	// Create body
-	glPushMatrix();
-	glTranslatef(0, 0, 0);
-	glColor3f(red, green, blue);
-	glScalef(3, 3, 2);
-	glutSolidCube(1);
-	glPopMatrix();
+	//glPushMatrix();
+	//glTranslatef(0, 0, -4);
+	//glColor3f(red, green, blue);
+	//glScalef(3, 3, 2);
+	//glutSolidCube(1);
+	//glPopMatrix();
 
-	// Create head
-	glPushMatrix();
-	glTranslatef(0, 2, 0);
-	glColor3f(red, green, blue);
-	glScalef(1.5, 1, 1);
-	glutSolidCube(1);
-	glPopMatrix();
+	//// Create head
+	//glPushMatrix();
+	//glTranslatef(0, 2, 0);
+	//glColor3f(red, green, blue);
+	//glScalef(1.5, 1, 1);
+	//glutSolidCube(1);
+	//glPopMatrix();
 
 	// Create right leg
 	glPushMatrix();
-	glTranslatef(-1, -2.5, 0);
-	glRotatef(rightRun, 1.0f, 0, 0);
+	glTranslatef(-1, 0, 0);
+	//glTranslatef(-1, -2.5, 0);
+	//glRotatef(rightRun, 1.0f, 0, 0);
 	glColor3f(red, green, blue);
-	glScalef(1, 2.5, 1);
+	//glScalef(2, 3.5, -2);
 	glutSolidCube(1);
 	glPopMatrix();
 
 	// Create left leg
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslatef(1, -2.5, 0);
 	glRotatef(leftRun, 1.0f, 0, 0);
 	glColor3f(red, green, blue);
 	glScalef(1, 2.5, 1);
 	glutSolidCube(1);
-	glPopMatrix();
+	glPopMatrix();*/
 
 	// Right arm
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslatef(-armPos, 1, 0);
-	//glRotatef(leftRun, 2.0f, 0, 0);
-	glRotatef(angle, 0, 0, 1.0f);
+	glRotatef(angleRobot, 0, 0, 1.0f);
 	glColor3f(red, green, blue);
 	glScalef(0.3, 1.8, 0.5);
 	glutSolidCube(1);
-	glPopMatrix();
+	glPopMatrix();*/
 
 	// Left arm
-	glPushMatrix();
-	glTranslatef(armPos, 1, 0);
-	//glRotatef(rightRun, 1.0f, 0, 0);
-	glRotatef(-angle, 0, 0, 1.0f);
-	glColor3f(red, green, blue);
-	glScalef(0.3, 1.8, 0.5);
-	glutSolidCube(1);
-	glPopMatrix();
+	//glPushMatrix();
+	//glTranslatef(armPos, 1, 0);
+	//glRotatef(-angleRobot, 0, 0, 1.0f);
+	//glColor3f(red, green, blue);
+	//glScalef(0.3, 1.8, 0.5);
+	//glutSolidCube(1);
+	//glPopMatrix();
 
-	// Right eye
-	glPushMatrix();
-	glTranslatef(-0.5, 2, 0.5);
-	glColor3f(eyeRed, eyeGreen, eyeBlue);
-	glScalef(0.1, 0.1, 0.1);
-	glutSolidCube(1);
-	glPopMatrix();
+	//// Right eye
+	//glPushMatrix();
+	//glTranslatef(-0.5, 2, 0.5);
+	//glColor3f(eyeRed, eyeGreen, eyeBlue);
+	//glScalef(0.1, 0.1, 0.1);
+	//glutSolidCube(1);
+	//glPopMatrix();
 
-	// Left eye
-	glPushMatrix();
-	glTranslatef(0.5, 2, 0.5);
-	glColor3f(eyeRed, eyeGreen, eyeBlue);
-	glScalef(0.1, 0.1, 0.1);
-	glutSolidCube(1);
-	glPopMatrix();
+	//// Left eye
+	//glPushMatrix();
+	//glTranslatef(0.5, 2, 0.5);
+	//glColor3f(eyeRed, eyeGreen, eyeBlue);
+	//glScalef(0.1, 0.1, 0.1);
+	//glutSolidCube(1);
+	//glPopMatrix();
 
 }
 
 // Move arms and legs
-static void run() {
+void run() {
 
 	if (!moved) {
 		rightRun = 25;
@@ -170,7 +163,7 @@ static void run() {
 
 }
 
-static void jump() {
+void jump() {
 
 	if (!jumped) {
 		rightRun = 0;
@@ -195,7 +188,7 @@ static void jump() {
 }
 
 // Change color of robot
-static void changeColor() {
+void changeColor() {
 
 	for (int i = 0; i < 3; i++) {
 		specular_light[i] = 0;
@@ -209,7 +202,7 @@ static void changeColor() {
 }
 
 // Blink eyes by switching from white to black to white.
-static void blink() {
+void blink() {
 	// Change specular light so color changes are seen.
 	for (int i = 0; i < 3; i++) {
 		specular_light[i] = 0;
@@ -229,7 +222,7 @@ static void blink() {
 }
 
 // Increase diffusive reflection
-static void diffuseReflect() {
+void diffuseReflect() {
 
 	float value = 0.1f;
 
@@ -246,7 +239,7 @@ static void diffuseReflect() {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 }
 
-static void specularReflect() {
+void specularReflect() {
 
 	float value = 0.1f;
 
@@ -262,7 +255,7 @@ static void specularReflect() {
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular_light);
 }
 
-static void increaseShiny() {
+void increaseShiny() {
 	if (high_shininess[0] >= 100)
 		high_shininess[0] = 0.0f;
 	else
@@ -271,18 +264,17 @@ static void increaseShiny() {
 	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 }
 
-// Wave arms by moving angle from 50 to 20
-static void waveArms() {
+// Wave arms by moving angleRobot from 50 to 20
+void waveArms() {
 
-	if (angle == 50)
-		angle = 20;
+	if (angleRobot == 50)
+		angleRobot = 20;
 	else
-		angle = 50;
+		angleRobot = 50;
 
 }
 
-static void reshape(int width, int height) {
-
+void reshape(int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
@@ -327,38 +319,32 @@ void keyboard(int key, int x, int y) {
 	glutPostRedisplay();
 }
 
-static void display(void) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+void drawRobot(void) {
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	// Isometric view
-	glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
-	glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//glOrtho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 
-	/*
-	glMatrixMode(GL_PROJECTION);
+	//// Isometric view
+	//glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
+	//glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
 
-	glLoadIdentity();
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	double aspect = (double)viewport[2] / (double)viewport[3];
-	gluPerspective(60, aspect, 1, 40);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	*/
-	// Move back
-	//glTranslatef(-6, 0, 0);
-
-	// Create the robot
-	glRotatef(bodyRotate.y, 0, 1.0f, 0);
+	//// Create the robot
+	//glRotatef(bodyRotate.y, 0, 1.0f, 0);
 	createRobot();
+}
 
-	glutSwapBuffers();
+void initRobot(void) 
+{
+	//glutReshapeFunc(reshape);
+
+	// Random
+	//srand(time(NULL));
+
+	//init();
 }
 
 
