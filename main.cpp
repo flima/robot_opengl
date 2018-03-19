@@ -14,6 +14,8 @@
 // angle of rotation for the camera direction
 float angle = 0.0f;
 
+static int shoulder = 0, elbow = 0, claw1 = 0, claw2 = 0;
+
 // actual vector representing the camera's direction
 float lx = 0.0f, lz = -1.0f;
 
@@ -54,6 +56,44 @@ void changeSize(int w, int h) {
 }
 
 void drawSnowMan() {
+
+	glPushMatrix();
+	glTranslatef(-0.5 , 0.6, 0.0);
+	glRotatef((GLfloat)shoulder, 0.0, 0.0, 1.0);
+	glTranslatef(1.0, 0.0, 0.0);
+	glPushMatrix();
+	glScalef(1.0, -0.2, 0.5);
+	glutSolidCube(1.0);
+	glPopMatrix();
+
+	glTranslatef(0.5, 0.0, 0.0);
+	glRotatef((GLfloat)elbow, 0.0, 0.0, 1.0);
+	glTranslatef(1.0, 0.0, 0.0);
+	glPushMatrix();
+	glScalef(2.0, 0.4, 0.5);
+	glutSolidCube(1.0);
+
+	glPopMatrix();
+
+	glTranslatef(0.5, 0.0, 0.0);
+	glRotatef((GLfloat)claw1, 0.0, 0.0, 0.0);
+	glTranslatef(0.7, -0.1, 0.0);
+	glPushMatrix();
+	glScalef(0.5, 0.1, 0.5);
+	glutSolidCube(1.0);
+	
+	glPopMatrix();
+
+	glTranslatef(0.5, 0.0, 0.0);
+	glRotatef(0.0, 0.0, 0.0, 0.0);
+	glTranslatef(-0.5 , 0.2, 0.0);
+	glPushMatrix();
+	glScalef(1, 0.1, 0.5);
+	glutSolidCube(1.0);
+
+	glPopMatrix();
+
+	glPopMatrix();
 
 	glColor3f(0.1f, 0.5f, 0.5f);
 
@@ -116,7 +156,44 @@ void renderScene(void) {
 void processNormalKeys(unsigned char key, int xx, int yy) {
 
 	switch (key) {
-		case 27: exit(0); break;
+		case 'i': {
+		shoulder = (shoulder + 5);
+		if (shoulder <= 40) {
+			glutPostRedisplay();
+		}
+		else { shoulder = 40; }
+		break; }
+		case 'o': {
+			shoulder = (shoulder - 5);
+			if (shoulder >= 0) {
+				glutPostRedisplay();
+			}
+			else { shoulder = 0; }
+			break; }
+		case 'p': {
+			elbow = (elbow + 5);
+			if (elbow <= 85) {
+				glutPostRedisplay();
+			}
+			else { elbow = 85; }
+			break; }
+		case 'u': {
+			elbow = (elbow - 5) % 90;
+			if (elbow >= 1) {
+				glutPostRedisplay();
+			}
+			else { elbow = 0; }
+			break; }
+
+		case 'x':{
+			claw1 = (claw1 - 1);
+			claw2 = (claw2 + 1);
+			if(claw1 <= 2 || claw1 >= -2){
+				glutPostRedisplay();
+			}
+			break;
+		}
+
 		case 119: { // w
 			if (positionZ <= -50) {
 				break;
