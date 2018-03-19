@@ -55,20 +55,20 @@ void changeSize(int w, int h) {
 
 void drawSnowMan() {
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(0.1f, 0.5f, 0.5f);
 
 	// Draw Body
 	glTranslatef(0.0f, 0.75f, 0.0f);
-	glutSolidSphere(0.75f, 20, 20);
+	glutSolidCube(1.25f);
 
 	// Draw Head
 	glTranslatef(0.0f, 1.0f, 0.0f);
-	glutSolidSphere(0.25f, 20, 20);
+	glutSolidCube(0.72f);
 
 	// Draw Eyes
 	glPushMatrix();
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glTranslatef(0.05f, 0.10f, 0.18f);
+	glColor3f(0.1f, 0.0f, 0.0f);
+	glTranslatef(0.5f, 0.10f, 0.18f);
 	glutSolidSphere(0.05f, 10, 10);
 	glTranslatef(-0.1f, 0.0f, 0.0f);
 	glutSolidSphere(0.05f, 10, 10);
@@ -205,7 +205,7 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1000, 600);
-	glutCreateWindow("RobÙ 3D");
+	glutCreateWindow("RobÅE3D");
 
 	initPlataform();
 
