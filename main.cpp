@@ -26,6 +26,8 @@ float deltaAngle = 0.0f;
 float deltaMove = 0;
 int xOrigin = -1;
 
+int positionX, positionZ = 0;
+
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -103,16 +105,52 @@ void renderScene(void) {
 	drawPlataform();
 
 	// Draw 36 SnowMen
+	glPushMatrix();
+	glTranslatef(positionX * 2.0, 0, positionZ * 2.0);
 	drawSnowMan();
+	glPopMatrix();
 	
 	glutSwapBuffers();
 }
 
 void processNormalKeys(unsigned char key, int xx, int yy) {
 
-	if (key == 27){
-		exit(0);
+	switch (key) {
+		case 27: exit(0); break;
+		case 119: { // w
+			if (positionZ <= -50) {
+				break;
+				return;
+			}
+			positionZ--; break;
+		}
+		case 115: { // s
+			if (positionZ >= 50) {
+				break;
+				return;
+			}
+			positionZ++; 
+			break;
+		}  
+		case 97: { // a
+			if (positionX <= -50) {
+				break;
+				return;
+			}
+			positionX--; 
+			break;
+		} 
+				  
+		case 100: { // d
+			if (positionX >= 50) {
+				break;
+				return;
+			}
+			positionX++; 
+			break;
+		}  
 	}
+
 }
 
 void pressKey(int key, int xx, int yy) {
@@ -166,9 +204,8 @@ int main(int argc, char **argv) {
 	// init GLUT and create window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 50);
 	glutInitWindowSize(1000, 600);
-	glutCreateWindow("Lighthouse3D - GLUT Tutorial");
+	glutCreateWindow("Robô 3D");
 
 	initPlataform();
 
@@ -177,7 +214,7 @@ int main(int argc, char **argv) {
 	glutReshapeFunc(changeSize);
 	glutIdleFunc(renderScene);
 
-	glutIgnoreKeyRepeat(1);
+	//glutIgnoreKeyRepeat(1);
 	glutKeyboardFunc(processNormalKeys);
 	glutSpecialFunc(pressKey);
 	glutSpecialUpFunc(releaseKey);
