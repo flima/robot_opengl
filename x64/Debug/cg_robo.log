@@ -1,0 +1,2 @@
+﻿  main.cpp
+c:\users\andré\source\repos\cg_robo\cg_robo\main.cpp(1): fatal error C1083: Não é possível abrir arquivo incluir: 'GL/glut.h': No such file or directory
