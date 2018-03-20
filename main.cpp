@@ -194,14 +194,14 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 			break;
 		}
 
-		case 119: { // w
+		case 'w': { 
 			if (positionZ <= -100) {
 				break;
 				return;
 			}
 			positionZ--; break;
 		}
-		case 115: { // s
+		case 's': {
 			if (positionZ >= 100) {
 				break;
 				return;
@@ -209,7 +209,7 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 			positionZ++; 
 			break;
 		}  
-		case 97: { // a
+		case 'a': { 
 			if (positionX <= -100) {
 				break;
 				return;
@@ -218,7 +218,7 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 			break;
 		} 
 				  
-		case 100: { // d
+		case 'd': { 
 			if (positionX >= 100) {
 				break;
 				return;
