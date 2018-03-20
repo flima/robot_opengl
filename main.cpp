@@ -10,15 +10,24 @@
 #include <cstdio>
 #include ".\plataform.h"
 
-// angle of rotation for the camera direction
-float angle = 0.0f;
+/*
+***********************************************************************
+-----------------------------------------------------------------------
+ALUNOS => PEDRO MARQUES e FERNANDO LIMA
+-----------------------------------------------------------------------
+***********************************************************************/
 
+
+// Robo
 static int shoulder = 0, elbow = 0, upperClaw = 1, lowerClaw = -1;
 
-// actual vector representing the camera's direction
+// Angulo de rotacao da camera
+float angle = 0.0f;
+
+// Direcoes da camera
 float lx = 0.0f, lz = -1.0f;
 
-// XZ position of the camera
+// Posicoes da camera
 float x = 0.0f, z = 5.0f;
 
 // the key states. These variables will be zero
@@ -31,26 +40,16 @@ int positionX = 0, positionZ = -2;
 
 void changeSize(int w, int h) {
 
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window of zero width).
 	if (h == 0)
+	{
 		h = 1;
+	}
 
 	float ratio = w * 1.0 / h;
-
-	// Use the Projection Matrix
 	glMatrixMode(GL_PROJECTION);
-
-	// Reset Matrix
 	glLoadIdentity();
-
-	// Set the viewport to be the entire window
 	glViewport(0, 0, w, h);
-
-	// Set the correct perspective.
 	gluPerspective(45.0f, ratio, 0.1f, 100.0f);
-
-	// Get Back to the Modelview
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -134,12 +133,9 @@ void renderScene(void) {
 	if (deltaMove)
 		computePos(deltaMove);
 
-	// Clear Color and Depth Buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Reset transformations
 	glLoadIdentity();
-	// Set the camera
 	gluLookAt(x, 1.0f, z,
 		x + lx, 1.0f, z + lz,
 		0.0f, 1.0f, 0.0f);
@@ -263,12 +259,9 @@ void releaseKey(int key, int x, int y) {
 
 void mouseMove(int x, int y) {
 
-	// this will only be true when the left button is down
 	if (xOrigin >= 0) {
-
-		// update deltaAngle
+		// Atualiza o angulo e direcao da camera
 		deltaAngle = (x - xOrigin) * 0.001f;
-		// update camera's direction
 		lx = sin(angle + deltaAngle);
 		lz = -cos(angle + deltaAngle);
 	}
@@ -276,23 +269,19 @@ void mouseMove(int x, int y) {
 
 void mouseButton(int button, int state, int x, int y) {
 
-	// only start motion if the left button is pressed
 	if (button == GLUT_LEFT_BUTTON) {
-
-		// when the button is released
 		if (state == GLUT_UP) {
 			angle += deltaAngle;
 			xOrigin = -1;
 		}
-		else {// state = GLUT_DOWN
+		else {
 			xOrigin = x;
 		}
 	}
 }
 
 int main(int argc, char **argv) {
-
-	// init GLUT and create window
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1000, 600);
@@ -300,25 +289,19 @@ int main(int argc, char **argv) {
 
 	initPlataform();
 
-	// register callbacks
+	// Inicializando os callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutIdleFunc(renderScene);
 
-	//glutIgnoreKeyRepeat(1);
 	glutKeyboardFunc(processNormalKeys);
 	glutSpecialFunc(pressKey);
 	glutSpecialUpFunc(releaseKey);
 
-	// here are the two new functions
 	glutMouseFunc(mouseButton);
 	glutMotionFunc(mouseMove);
 
-	// OpenGL init
 	glEnable(GL_DEPTH_TEST);
-
-	// enter GLUT event processing cycle
 	glutMainLoop();
-
 	return 1;
 }
