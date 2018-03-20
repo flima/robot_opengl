@@ -9,12 +9,11 @@
 #include <cstdlib>
 #include <cstdio>
 #include ".\plataform.h"
-#include ".\robot.h"
 
 // angle of rotation for the camera direction
 float angle = 0.0f;
 
-static int shoulder = 0, elbow = 0, claw1 = 0, claw2 = 0;
+static int shoulder = 0, elbow = 0, upperClaw = 1, lowerClaw = -1;
 
 // actual vector representing the camera's direction
 float lx = 0.0f, lz = -1.0f;
@@ -55,9 +54,9 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void drawSnowMan() {
+void drawRobot() {
 
-	// Desenhando o braco
+	// Desenhando o braco direito
 	glPushMatrix();
 	glTranslatef(-0.5 , 0.6, 0.0);
 	glRotatef((GLfloat)shoulder, 0.0, 0.0, 1.0);
@@ -71,32 +70,32 @@ void drawSnowMan() {
 	glRotatef((GLfloat)elbow, 0.0, 0.0, 1.0);
 	glTranslatef(1.0, 0.0, 0.0);
 	glPushMatrix();
-	glScalef(2.0, 0.4, 0.5);
+	glScalef(2.0, 0.5, 0.5);
 	glutSolidCube(1.0);
 
-	glPopMatrix();
-
-	glTranslatef(0.5, 0.0, 0.0);
-	glRotatef((GLfloat)claw1, 0.0, 0.0, 0.0);
-	glTranslatef(0.7, -0.1, 0.0);
-	glPushMatrix();
-	glScalef(0.5, 0.1, 0.5);
-	glutSolidCube(1.0);
-	
 	glPopMatrix();
 
 	glTranslatef(0.5, 0.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 0.0);
-	glTranslatef(-0.5 , 0.2, 0.0);
+	glTranslatef(0.7, -0.1, 0.0);
+	
+	// Desenhando a garra inferior
 	glPushMatrix();
-	glScalef(1, 0.1, 0.5);
+	glRotatef((GLfloat)lowerClaw, 0.0, 0.0, 1.0);
+	glTranslatef(0.0, 0.00, 0.0);
+	glScalef(1.0, 0.1, 0.5);
 	glutSolidCube(1.0);
+	glPopMatrix();
 
+	// Desenhando a garra superior
+	glPushMatrix();
+	glRotatef((GLfloat)upperClaw, 0.0, 0.0, 1.0);
+	glTranslatef(0.0, 0.2, 0.0);
+	glScalef(1.0, 0.1, 0.5);
+	glutSolidCube(1.0);
 	glPopMatrix();
 
 	glPopMatrix();
-
-	//glColor3f(0.1f, 0.5f, 0.5f);
 	
 	// Desenhando o corpo
 	glTranslatef(0.0f, 0.75f, 0.0f);
@@ -145,13 +144,12 @@ void renderScene(void) {
 		x + lx, 1.0f, z + lz,
 		0.0f, 1.0f, 0.0f);
 
-	//glColor3f(0.9f, 0.9f, 0.9f);
 	drawPlataform();
 
-	// Draw 36 SnowMen
+	// Draw Robot
 	glPushMatrix();
 	glTranslatef(positionX * 1, 0, positionZ * 1);
-	drawSnowMan();
+	drawRobot();
 	glPopMatrix();
 	
 	glutSwapBuffers();
@@ -190,11 +188,23 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 			break; }
 
 		case 'x':{
-			claw1 = (claw1 - 1);
-			claw2 = (claw2 + 1);
-			if(claw1 <= 2 || claw1 >= -2){
-				glutPostRedisplay();
+			if (upperClaw <= -10) {
+				break;
+				return;
 			}
+			upperClaw--;
+			lowerClaw++;
+			glutPostRedisplay();
+			break;
+		}
+		case 'z': {
+			if (upperClaw >= 30) {
+				break;
+				return;
+			}
+			upperClaw++;
+			lowerClaw--;
+			glutPostRedisplay();
 			break;
 		}
 
@@ -286,7 +296,7 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1000, 600);
-	glutCreateWindow("RobÅE3D");
+	glutCreateWindow("RobÅot 3D");
 
 	initPlataform();
 
